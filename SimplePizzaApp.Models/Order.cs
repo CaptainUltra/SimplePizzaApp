@@ -6,6 +6,12 @@ namespace SimplePizzaApp.Models
 {
     public class Order
     {
+        public Order()
+        {
+            this.CreatedAt = DateTime.UtcNow;
+            this.UpdatedAt = DateTime.UtcNow;
+            this.Pizzas = new List<OrderPizza>();
+        }
         public int Id { get; set; }
         public string ClientName { get; set; }
         public string Address { get; set; }
