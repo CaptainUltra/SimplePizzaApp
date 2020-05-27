@@ -1,4 +1,5 @@
-﻿using SimplePizzaApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplePizzaApp.Data;
 using SimplePizzaApp.Models;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,10 @@ namespace SimplePizzaApp.Services
 
         public Pizza Show(int id)
         {
-            var pizza = this.context.Pizzas.FirstOrDefault(p => p.Id == id);
+            var pizza = this.context.Pizzas
+                .Include(p => p.Ingredients)
+                .ThenInclude(i => i.Ingredient)
+                .FirstOrDefault(p => p.Id == id);
             if (pizza == null)
             {
                 throw new ArgumentException("Invalid pizza id.", "id");
