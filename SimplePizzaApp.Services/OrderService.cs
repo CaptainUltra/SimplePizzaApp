@@ -81,7 +81,9 @@ namespace SimplePizzaApp.Services
 
         public Order Update(int id, Order newOrder)
         {
-            var order = this.context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = this.context.Orders
+                .Include(o => o.Pizzas)
+                .FirstOrDefault(o => o.Id == id);
             if (order == null)
             {
                 throw new ArgumentException("Invalid order id.", "id");
@@ -89,7 +91,12 @@ namespace SimplePizzaApp.Services
 
             order.ClientName = newOrder.ClientName;
             order.Address = newOrder.Address;
-            order.Pizzas = newOrder.Pizzas;
+            order.Pizzas.Clear();
+
+            foreach (var pizza in newOrder.Pizzas)
+            {
+                order.Pizzas.Add(pizza);
+            }
             order.Total = order.Pizzas.Sum(x => x.Pizza.Price);
             order.UpdatedAt = DateTime.UtcNow;
 

@@ -95,7 +95,9 @@ namespace SimplePizzaApp.Services
 
         public Pizza Update(int id, Pizza newPizza)
         {
-            var pizza = this.context.Pizzas.FirstOrDefault(p => p.Id == id);
+            var pizza = this.context.Pizzas
+                .Include(p => p.Ingredients)
+                .FirstOrDefault(p => p.Id == id);
             if (pizza == null)
             {
                 throw new ArgumentException("Invalid pizza id.", "id");
@@ -104,7 +106,12 @@ namespace SimplePizzaApp.Services
             pizza.Name = newPizza.Name;
             pizza.Description = newPizza.Description;
             pizza.Price = newPizza.Price;
-            pizza.Ingredients = newPizza.Ingredients;
+            pizza.Ingredients.Clear();
+
+            foreach (var ingredient in newPizza.Ingredients)
+            {
+                pizza.Ingredients.Add(ingredient);
+            }
             pizza.UpdatedAt = DateTime.UtcNow;
 
             this.context.SaveChanges();
