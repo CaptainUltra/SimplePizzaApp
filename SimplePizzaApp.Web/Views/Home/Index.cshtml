@@ -1,8 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начало";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-center">
+        <h2>Добре дошли в "Просто пица приложение"</h2>
+        <p>Започнете да използвате приложението!</p>
+        <p>
+            <a asp-area="" asp-controller="Ingredient" asp-action="Index">Съставки</a>
+            |
+            <a asp-area="" asp-controller="Pizza" asp-action="Index">Пици</a>
+            |
+            <a asp-area="" asp-controller="Order" asp-action="Index">Поръчки</a>
+        </p>
+    </div>

@@ -1,0 +1,31 @@
+﻿@model SimplePizzaApp.Web.Models.Pizza.DeletePizzaViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Изтриване на пица</h3>
+
+<h5>Сигурни ли сте, че искате да изтриете този запис?</h5>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            №
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            Име
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Изтриване" class="btn btn-danger" /> |
+        <a asp-action="Index">Обратно към списъка</a>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+﻿@model SimplePizzaApp.Web.Models.Order.EditOrderViewModel
+
+@{
+    ViewData["Title"] = "Промяна на поръчка";
+}
+
+<h3>Промяна на поръчка</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClientName" class="control-label">Име на клиент</label>
+                <input asp-for="ClientName" class="form-control" />
+                <span asp-validation-for="ClientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label">Адрес</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h5>Пици:</h5>
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                List<SimplePizzaApp.Web.Models.Order.SelectedOrderPizzaViewModel> pizzas = ViewBag.Pizzas;
+
+                                foreach (var pizza in pizzas)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedPizzas"
+                                               value="@pizza.Id"
+                                               @(Html.Raw(pizza.Selected ? "checked=\"checked\"" : "")) />
+                                        @pizza.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Запис" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Обратно към списъка</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

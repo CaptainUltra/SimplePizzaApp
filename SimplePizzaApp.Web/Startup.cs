@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using SimplePizzaApp.Services;
 
 namespace SimplePizzaApp.Web
 {
@@ -27,6 +28,9 @@ namespace SimplePizzaApp.Web
         {
             services.AddControllersWithViews();
             services.AddDbContext<SimplePizzaAppDbContext>(options => options.UseMySql(Data.Configuration.ConnectionString));
+            services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<IPizzaService, PizzaService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
